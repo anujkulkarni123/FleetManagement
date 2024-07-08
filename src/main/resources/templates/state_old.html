@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>State Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+</head>
+<body>
+    <div class="container">
+        <h2>State Management</h2>
+        
+        <!-- Error Message -->
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+        
+        <!-- State Form -->
+        <div class="card mt-3">
+            <div class="card-header">Add / Update State</div>
+            <div class="card-body">
+                <form th:action="@{/states/save}" method="post">
+                    <input type="hidden" name="stateId" th:value="${state.stateId}" />
+                    <div class="form-group">
+                        <label for="stateName">State Name</label>
+                        <input type="text" id="stateName" name="stateName" th:value="${state.stateName}" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="capital">Capital</label>
+                        <input type="text" id="capital" name="capital" th:value="${state.capital}" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="code">Code</label>
+                        <input type="text" id="code" name="code" th:value="${state.code}" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="countryId">Country</label>
+                        <select id="countryId" name="countryId" class="form-control" required>
+                            <option th:each="country : ${countries}" th:value="${country.countryId}" th:text="${country.countryCode}" th:selected="${country.countryId == state.countryId}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="details">Details</label>
+                        <textarea id="details" name="details" class="form-control" required th:text="${state.details}"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- State List -->
+        <div class="card mt-3">
+            <div class="card-header">State List</div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Capital</th>
+                            <th>Code</th>
+                            <th>Country</th>
+                            <th>Details</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="state : ${states}">
+                            <td th:text="${state.stateId}"></td>
+                            <td th:text="${state.stateName}"></td>
+                            <td th:text="${state.capital}"></td>
+                            <td th:text="${state.code}"></td>
+                            <td th:text="${state.country.countryCode}"></td>
+                            <td th:text="${state.details}"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" th:href="@{/states/findById/{id}(id=${state.stateId})}"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-success" id="detailsButton" th:href="@{/states/findById/{id}(id=${state.stateId})}"><i class="fas fa-file-alt"></i></a>
+                                    <a class="btn btn-danger" id="deleteButton" th:href="@{/states/delete/{id}(id=${state.stateId})}"><i class="fas fa-times"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
