@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Favicons -->
+<link href="assets/img/favicon.png" rel="icon">
+<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.gstatic.com" rel="preconnect">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<link href="assets/vendor/boxicons/css/boxicons.min.css"
+	rel="stylesheet">
+<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<head>
+<meta charset="UTF-8">
+<title>New Vehicle</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<style>
+body {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+}
+
+.backButton {
+	margin-top: 10px;
+}
+
+.page-header-content {
+	margin-left: 60px;
+	margin-top: 30px;
+}
+
+.button-group {
+	max-width: 100%;
+	margin-right: 4rem;
+	margin-left: 30rem;
+}
+
+.button-group .btn {
+	margin: 5px; /* Optional: Add some margin for spacing */
+}
+
+.main-title {
+	padding-left: 20px;
+	margin-top: 5px; /* Space between the back button and title */
+	margin-bottom: 0; /* Remove extra bottom margin */
+}
+
+.header2 {
+	padding: 20px;
+	background-color: white; /* Slightly different shade of white */
+	width: calc(100% - 220px); /* Full width minus sidebar width */
+	margin-left: 220px; /* Align with the sidebar */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	position: relative;
+	margin-bottom: 0; /* Remove space between header and content */
+}
+
+.header2 .header-buttons {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
+
+.header2 .btn {
+	margin-left: 10px; /* Space between buttons */
+}
+
+.main-content {
+	display: flex;
+	padding: 0 20px;
+	/* Adjust padding to remove space between header and forms */
+	margin-left: 220px; /* Align with the sidebar */
+	width: calc(100% - 220px); /* Full width minus sidebar width */
+}
+
+.sidebar2 {
+	width: 200px;
+	height: 45vh; /* 50% height of the viewport */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	border-radius: 10px; /* Curved corners */
+	position: fixed; /* Fix position to keep the size constant */
+}
+
+.sidebar2 .nav-item {
+	padding: 10px 20px;
+	cursor: pointer;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.sidebar2 .nav-item:hover {
+	background-color: #e9ecef;
+}
+
+.sidebar2 .nav-item.active {
+	background-color: white;
+	color: #007bff;
+	border-left: 3px solid #007bff; /* Adjusted width of the bar */
+	padding-left: 17px; /* Adjust padding to ensure text doesn't shift */
+}
+
+.sidebar2 .nav-item.active::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px; /* Adjusted width of the bar */
+	background-color: #007bff;
+}
+
+.sidebar2 .sidebar-icon {
+	margin-right: 10px;
+	width: 20px; /* Adjust icon size as needed */
+}
+
+.content {
+	flex-grow: 1;
+	max-width: 100%;
+	margin-left: 220px;
+	/* Ensure content is not hidden under the fixed sidebar */
+}
+
+.section {
+	display: none;
+}
+
+.section .card {
+	background-color: white;
+	border: none; /* Remove border to eliminate the grey header */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	/* Optional: Add shadow for subtle separation */
+}
+
+.section .card-header {
+	display: none; /* Hide the grey header */
+}
+
+.section.active {
+	display: block;
+}
+</style>
+</head>
+
+<body>
+	<!-- ======= Header ======= -->
+	<header id="header" class="header fixed-top d-flex align-items-center">
+
+		<div class="d-flex align-items-center justify-content-between">
+			<a href="index.html" class="logo d-flex align-items-center"> <img
+				src="assets/img/logo.png" alt=""> <span
+				class="d-none d-lg-block">NiceAdmin</span>
+			</a> <i class="bi bi-list toggle-sidebar-btn"></i>
+		</div>
+		<!-- End Logo -->
+
+		<div class="search-bar">
+			<form class="search-form d-flex align-items-center" method="POST"
+				action="#">
+				<input type="text" name="query" placeholder="Search"
+					title="Enter search keyword">
+				<button type="submit" title="Search">
+					<i class="bi bi-search"></i>
+				</button>
+			</form>
+		</div>
+		<!-- End Search Bar -->
+
+		<nav class="header-nav ms-auto">
+			<ul class="d-flex align-items-center">
+
+				<li class="nav-item d-block d-lg-none"><a
+					class="nav-link nav-icon search-bar-toggle " href="#"> <i
+						class="bi bi-search"></i>
+				</a></li>
+				<!-- End Search Icon-->
+
+				<li class="nav-item dropdown"><a class="nav-link nav-icon"
+					href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i>
+						<span class="badge bg-primary badge-number">4</span>
+				</a> <!-- End Notification Icon -->
+
+					<ul
+						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+						<li class="dropdown-header">You have 4 new notifications <a
+							href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View
+									all</span></a>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="notification-item"><i
+							class="bi bi-exclamation-circle text-warning"></i>
+							<div>
+								<h4>Lorem Ipsum</h4>
+								<p>Quae dolorem earum veritatis oditseno</p>
+								<p>30 min. ago</p>
+							</div></li>
+
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="notification-item"><i
+							class="bi bi-x-circle text-danger"></i>
+							<div>
+								<h4>Atque rerum nesciunt</h4>
+								<p>Quae dolorem earum veritatis oditseno</p>
+								<p>1 hr. ago</p>
+							</div></li>
+
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="notification-item"><i
+							class="bi bi-check-circle text-success"></i>
+							<div>
+								<h4>Sit rerum fuga</h4>
+								<p>Quae dolorem earum veritatis oditseno</p>
+								<p>2 hrs. ago</p>
+							</div></li>
+
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="notification-item"><i
+							class="bi bi-info-circle text-primary"></i>
+							<div>
+								<h4>Dicta reprehenderit</h4>
+								<p>Quae dolorem earum veritatis oditseno</p>
+								<p>4 hrs. ago</p>
+							</div></li>
+
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li class="dropdown-footer"><a href="#">Show all
+								notifications</a></li>
+
+					</ul> <!-- End Notification Dropdown Items --></li>
+				<!-- End Notification Nav -->
+
+				<li class="nav-item dropdown"><a class="nav-link nav-icon"
+					href="#" data-bs-toggle="dropdown"> <i
+						class="bi bi-chat-left-text"></i> <span
+						class="badge bg-success badge-number">3</span>
+				</a> <!-- End Messages Icon -->
+
+					<ul
+						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+						<li class="dropdown-header">You have 3 new messages <a
+							href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View
+									all</span></a>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="message-item"><a href="#"> <img
+								src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+								<div>
+									<h4>Maria Hudson</h4>
+									<p>Velit asperiores et ducimus soluta repudiandae labore
+										officia est ut...</p>
+									<p>4 hrs. ago</p>
+								</div>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="message-item"><a href="#"> <img
+								src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+								<div>
+									<h4>Anna Nelson</h4>
+									<p>Velit asperiores et ducimus soluta repudiandae labore
+										officia est ut...</p>
+									<p>6 hrs. ago</p>
+								</div>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="message-item"><a href="#"> <img
+								src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+								<div>
+									<h4>David Muldon</h4>
+									<p>Velit asperiores et ducimus soluta repudiandae labore
+										officia est ut...</p>
+									<p>8 hrs. ago</p>
+								</div>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="dropdown-footer"><a href="#">Show all messages</a>
+						</li>
+
+					</ul> <!-- End Messages Dropdown Items --></li>
+				<!-- End Messages Nav -->
+
+				<li class="nav-item dropdown pe-3"><a
+					class="nav-link nav-profile d-flex align-items-center pe-0"
+					href="#" data-bs-toggle="dropdown"> <img
+						src="assets/img/profile-img.jpg" alt="Profile"
+						class="rounded-circle"> <span
+						class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+				</a> <!-- End Profile Iamge Icon -->
+
+					<ul
+						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+						<li class="dropdown-header">
+							<h6>Kevin Anderson</h6> <span>Web Designer</span>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li><a class="dropdown-item d-flex align-items-center"
+							href="users-profile.html"> <i class="bi bi-person"></i> <span>My
+									Profile</span>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li><a class="dropdown-item d-flex align-items-center"
+							href="users-profile.html"> <i class="bi bi-gear"></i> <span>Account
+									Settings</span>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li><a class="dropdown-item d-flex align-items-center"
+							href="pages-faq.html"> <i class="bi bi-question-circle"></i>
+								<span>Need Help?</span>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li><a class="dropdown-item d-flex align-items-center"
+							href="#"> <i class="bi bi-box-arrow-right"></i> <span>Sign
+									Out</span>
+						</a></li>
+
+					</ul> <!-- End Profile Dropdown Items --></li>
+				<!-- End Profile Nav -->
+
+			</ul>
+		</nav>
+		<!-- End Icons Navigation -->
+
+	</header>
+	<!-- End Header -->
+
+	<!-- ======= Sidebar ======= -->
+	<aside id="sidebar" class="sidebar">
+
+		<ul class="sidebar-nav" id="sidebar-nav">
+
+			<li class="nav-item"><a class="nav-link " href="index.html">
+					<i class="bi bi-grid"></i> <span>Dashboard</span>
+			</a></li>
+			<!-- End Dashboard Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-menu-button-wide"></i><span>Components</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="components-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="/countries"> <i class="bi bi-circle"></i><span>Countries</span>
+					</a></li>
+					<li><a href="/states"> <i class="bi bi-circle"></i><span>States</span>
+					</a></li>
+					<li><a href="/routes"> <i class="bi bi-circle"></i><span>Routes</span>
+					</a></li>
+					<li><a href="/users"> <i class="bi bi-circle"></i><span>Users</span>
+					</a></li>
+					<li><a href="/vehicles"> <i class="bi bi-circle"></i><span>Vehicles</span>
+					</a></li>
+				</ul></li>
+			<!-- End Components Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-journal-text"></i><span>Forms</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="forms-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="forms-elements.html"> <i class="bi bi-circle"></i><span>Form
+								Elements</span>
+					</a></li>
+					<li><a href="forms-layouts.html"> <i class="bi bi-circle"></i><span>Form
+								Layouts</span>
+					</a></li>
+					<li><a href="forms-editors.html"> <i class="bi bi-circle"></i><span>Form
+								Editors</span>
+					</a></li>
+					<li><a href="forms-validation.html"> <i
+							class="bi bi-circle"></i><span>Form Validation</span>
+					</a></li>
+				</ul></li>
+			<!-- End Forms Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="tables-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="tables-general.html"> <i class="bi bi-circle"></i><span>General
+								Tables</span>
+					</a></li>
+					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>Data
+								Tables</span>
+					</a></li>
+				</ul></li>
+			<!-- End Tables Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-bar-chart"></i><span>Charts</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="charts-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="charts-chartjs.html"> <i class="bi bi-circle"></i><span>Chart.js</span>
+					</a></li>
+					<li><a href="charts-apexcharts.html"> <i
+							class="bi bi-circle"></i><span>ApexCharts</span>
+					</a></li>
+					<li><a href="charts-echarts.html"> <i class="bi bi-circle"></i><span>ECharts</span>
+					</a></li>
+				</ul></li>
+			<!-- End Charts Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-gem"></i><span>Icons</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="icons-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="icons-bootstrap.html"> <i
+							class="bi bi-circle"></i><span>Bootstrap Icons</span>
+					</a></li>
+					<li><a href="icons-remix.html"> <i class="bi bi-circle"></i><span>Remix
+								Icons</span>
+					</a></li>
+					<li><a href="icons-boxicons.html"> <i class="bi bi-circle"></i><span>Boxicons</span>
+					</a></li>
+				</ul></li>
+			<!-- End Icons Nav -->
+
+			<li class="nav-heading">Pages</li>
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="users-profile.html"> <i class="bi bi-person"></i> <span>Profile</span>
+			</a></li>
+			<!-- End Profile Page Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="pages-faq.html"> <i class="bi bi-question-circle"></i> <span>F.A.Q</span>
+			</a></li>
+			<!-- End F.A.Q Page Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="pages-contact.html"> <i class="bi bi-envelope"></i> <span>Contact</span>
+			</a></li>
+			<!-- End Contact Page Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="pages-register.html"> <i class="bi bi-card-list"></i> <span>Register</span>
+			</a></li>
+			<!-- End Register Page Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="pages-login.html"> <i class="bi bi-box-arrow-in-right"></i>
+					<span>Login</span>
+			</a></li>
+			<!-- End Login Page Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="pages-error-404.html"> <i class="bi bi-dash-circle"></i> <span>Error
+						404</span>
+			</a></li>
+			<!-- End Error 404 Page Nav -->
+
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="pages-blank.html"> <i class="bi bi-file-earmark"></i> <span>Blank</span>
+			</a></li>
+			<!-- End Blank Page Nav -->
+
+		</ul>
+
+	</aside>
+	<!-- End Sidebar-->
+	<div class="page-header-content">
+		<div class="header2">
+			<div class="d-flex flex-column align-items-start">
+				<a href="/vehicles"
+					class="btn btn-link text-decoration-none backButton"> <i
+					class="bi bi-arrow-left"></i> Vehicles
+				</a>
+				<h1 class="main-title">New Vehicle</h1>
+			</div>
+			<div class="header-buttons">
+				<button class="btn btn-outline-secondary me-2">Cancel</button>
+				<button class="btn btn-outline-primary me-2">Add Another
+					Vehicle</button>
+				<button class="btn btn-primary">Save All Vehicles</button>
+			</div>
+		</div>
+
+		<form action="/api/addVehicle" method="post">
+			<div class="main-content">
+
+				<div class="sidebar2">
+					<div class="nav flex-column">
+						<div class="nav-item" data-target="details">
+							<img src="assets/img/google-docs.png" alt="Details Icon"
+								class="sidebar-icon">Details
+						</div>
+						<div class="nav-item" data-target="maintenance">
+							<img src="assets/img/wrench.png" alt="Maintenance Icon"
+								class="sidebar-icon">Maintenance
+						</div>
+						<div class="nav-item" data-target="lifecycle">
+							<img src="assets/img/calendar.png" alt="Lifecycle Icon"
+								class="sidebar-icon">Lifecycle
+						</div>
+						<div class="nav-item" data-target="financial">
+							<img src="assets/img/rec.png" alt="Financial Icon"
+								class="sidebar-icon">Financial
+						</div>
+						<div class="nav-item" data-target="specifications">
+							<img src="assets/img/graph-analysis.png"
+								alt="Specifications Icon" class="sidebar-icon">Specifications
+						</div>
+						<div class="nav-item" data-target="settings">
+							<img src="assets/img/settings.png" alt="Settings Icon"
+								class="sidebar-icon">Settings
+						</div>
+					</div>
+				</div>
+				<div class="content">
+					<!-- Details Section -->
+					<div class="section" id="details">
+						<div class="card ms-3 me-5 mt-2 shadow">
+							<div class="card-header">Details</div>
+							<div class="card-body">
+								<div class="row g-3">
+									<div class="col-md-6">
+										<label for="vin" class="form-label">VIN/SIN</label> <input
+											type="text" class="form-control" id="vin" name="vin">
+									</div>
+								</div>
+								<div class="row g-3 mt-3">
+									<div class="col-md-6">
+										<label for="vehicleName" class="form-label">Vehicle
+											Name</label> <input type="text" class="form-control"
+											id="vehicleName" name="vehicleName">
+									</div>
+									<div class="col-md-6">
+										<label for="inputType" class="form-label">Type</label> <select
+											class="form-select" id="inputType" >
+											<option selected>Choose...</option>
+											<!-- Add options here -->
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="inputStatus" class="form-label">Status</label> <select
+											class="form-select" id="inputStatus" >
+											<option selected>Choose...</option>
+											<!-- Add options here -->
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="inputOwnership" class="form-label">Ownership</label>
+										<select class="form-select" id="inputOwnership" >
+											<option selected>Choose...</option>
+											<!-- Add options here -->
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="inputLabels" class="form-label">Labels</label> <select
+											class="form-select" id="inputLabels" >
+											<option selected>Choose...</option>
+											<!-- Add options here -->
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Maintenance Section -->
+					<div class="section" id="maintenance">
+						<div class="card ms-3 me-5 mt-2 shadow">
+							<div class="card-header">Maintenance</div>
+							<div class="card-body">
+								<div class="row g-3">
+									<div class="col-md-12">
+										<label for="inputMaintenanceSchedule" class="form-label">Maintenance
+											Schedule</label> <select class="form-select"
+											id="inputMaintenanceSchedule" >
+											<option selected>Choose...</option>
+											<option>No maintenance schedule</option>
+											<option>Create a new maintenance schedule</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Lifecycle Section -->
+					<div class="section" id="lifecycle">
+						<div class="card ms-3 me-5 mt-2 shadow">
+							<div class="card-header">Lifecycle</div>
+							<div class="card-body">
+								<div class="row g-3">
+									<div class="col-md-6">
+										<label for="inputServiceDate" class="form-label">In-Service
+											Date</label> <input type="date" class="form-control"
+											id="inputServiceDate" >
+									</div>
+									<div class="col-md-6">
+										<label for="inputOdometer" class="form-label">In
+											Service Odometer</label> <input type="number" class="form-control"
+											id="inputOdometer" >
+									</div>
+								</div>
+								<div class="row g-3 mt-3">
+									<div class="col-md-4">
+										<label for="inputServiceLifeMonths" class="form-label">Estimated
+											Service Life in Months</label> <input type="number"
+											class="form-control" id="inputServiceLifeMonths" >
+									</div>
+									<div class="col-md-4">
+										<label for="inputServiceLifeMeter" class="form-label">Estimated
+											Service Life in Meter</label> <input type="number"
+											class="form-control" id="inputServiceLifeMeter" >
+									</div>
+									<div class="col-md-4">
+										<label for="inputResellValue" class="form-label">Estimated
+											Resell Value</label> <input type="number" class="form-control"
+											id="inputResellValue" >
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Financial Section -->
+					<div class="section" id="financial">
+						<div class="card ms-3 me-5 mt-2 shadow">
+							<div class="card-header">Financial</div>
+							<div class="card-body">
+								<div class="row g-3">
+									<div class="col-md-6">
+										<label for="inputVendor" class="form-label">Purchase
+											Vendor</label> <select class="form-select" id="inputVendor" >
+											<option selected>Choose...</option>
+											<!-- Add options here -->
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="inputPurchaseDate" class="form-label">Purchase
+											Date</label> <input type="date" class="form-control"
+											id="inputPurchaseDate" >
+									</div>
+									<div class="col-md-6">
+										<label for="inputPurchasePrice" class="form-label">Purchase
+											Price</label> <input type="number" class="form-control"
+											id="inputPurchasePrice" >
+									</div>
+									<div class="col-md-6">
+										<label for="inputOdometerFinancial" class="form-label">Odometer</label>
+										<input type="number" class="form-control"
+											id="inputOdometerFinancial" >
+									</div>
+									<div class="col-12">
+										<label for="inputNotes" class="form-label">Notes</label>
+										<textarea class="form-control" id="inputNotes" rows="3"></textarea>
+									</div>
+								</div>
+								<div class="row g-3 mt-3">
+									<div class="col-md-6">
+										<label for="inputLoanLease" class="form-label">Loan/Lease</label>
+										<select class="form-select" id="inputLoanLease" >
+											<option selected>Choose...</option>
+											<option>Loan</option>
+											<option>Lease</option>
+											<option>None</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Specifications Section -->
+					<div class="section" id="specifications">
+						<div class="card ms-3 me-5 mt-2 shadow">
+							<div class="card-header">Specifications</div>
+							<div class="card-body">
+								<div class="row g-3">
+									<div class="col-md-3">
+										<label for="inputWidth" class="form-label">Width</label> <input
+											type="number" class="form-control" id="inputWidth" >
+									</div>
+									<div class="col-md-3">
+										<label for="inputHeight" class="form-label">Height</label> <input
+											type="number" class="form-control" id="inputHeight" >
+									</div>
+									<div class="col-md-3">
+										<label for="inputLength" class="form-label">Length</label> <input
+											type="number" class="form-control" id="inputLength" >
+									</div>
+									<div class="col-md-3">
+										<label for="inputInteriorVolume" class="form-label">Interior
+											Volume</label> <input type="number" class="form-control"
+											id="inputInteriorVolume" >
+									</div>
+									<div class="col-md-3">
+										<label for="inputPassengerVolume" class="form-label">Passenger
+											Volume</label> <input type="number" class="form-control"
+											id="inputPassengerVolume" >
+									</div>
+									<div class="col-md-3">
+										<label for="inputCargoVolume" class="form-label">Cargo
+											Volume</label> <input type="number" class="form-control"
+											id="inputCargoVolume" >
+									</div>
+									<div class="col-md-3">
+										<label for="inputGroundClearance" class="form-label">Ground
+											Clearance</label> <input type="number" class="form-control"
+											id="inputGroundClearance" >
+									</div>
+									<div class="col-md-3">
+										<label for="inputBedLength" class="form-label">Bed
+											Length</label> <input type="number" class="form-control"
+											id="inputBedLength" >
+									</div>
+								</div>
+								<div class="row g-3 mt-3">
+									<div class="col-md-6">
+										<label for="inputCurbWeight" class="form-label">Curb
+											Weight</label> <input type="number" class="form-control"
+											id="inputCurbWeight" >
+									</div>
+									<div class="col-md-6">
+										<label for="inputGrossWeight" class="form-label">Gross
+											Vehicle Weight Rating</label> <input type="number"
+											class="form-control" id="inputGrossWeight" >
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Settings Section -->
+					<div class="section" id="settings">
+						<div class="card ms-3 me-5 mt-2 shadow">
+							<div class="card-header">Settings</div>
+							<div class="card-body">
+								<div class="row g-3">
+									<div class="col-md-6">
+										<label for="inputPrimaryMeter" class="form-label">Primary
+											Meter</label> <select class="form-select" id="inputPrimaryMeter"
+											>
+											<option selected>Choose...</option>
+											<option>Miles</option>
+											<option>Kilometers</option>
+											<option>Hours</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label for="inputFuelUnit" class="form-label">Fuel
+											Unit</label> <select class="form-select" id="inputFuelUnit" >
+											<option selected>Choose...</option>
+											<option>Gallons (US)</option>
+											<option>Gallons (UK)</option>
+											<option>Liters</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="button-group mt-3 d-flex justify-content-between">
+				<button class="btn btn-outline-secondary" type="button">Cancel</button>
+				<div>
+					<button class="btn btn-primary" type="submit" name="action"
+						value="save">Save All</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script>
+        document.querySelectorAll('.sidebar2 .nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar2 .nav-item').forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                const target = item.getAttribute('data-target');
+                document.querySelectorAll('.section').forEach(section => {
+                    if (section.id === target) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Trigger click on the first sidebar item to show the first form by default
+        document.querySelector('.sidebar2 .nav-item').click();
+    </script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

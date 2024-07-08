@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+        }
+
+        .backButton {
+            margin-top: 10px;
+        }
+
+        .page-header-content {
+            margin-left: 60px;
+            margin-top: 30px;
+        }
+
+        .main-title {
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+
+        .header2 {
+            background-color: white;
+            width: calc(100% - 220px);
+            margin-left: 220px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .header2 .header-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .header2 .btn {
+            margin-left: 10px;
+        }
+
+        .details, .timeline {
+            width: 40%;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .details {
+            margin-right: 10px;
+            margin-left: 250px;
+        }
+
+		.timeline {
+		    margin-left: 10px;
+			margin-right: 50px;
+		    padding: 20px;
+
+		}
+		.timeline-item {
+		    display: flex;
+		    align-items: flex-start;
+		    margin-bottom: 20px;
+		}
+
+		.timeline-icon {
+		    width: 40px;
+		    height: 40px;
+		    margin-right: 10px;
+		}
+
+		.timeline-icon img {
+		    width: 100%;
+		    height: 100%;
+		    border-radius: 50%;
+		}
+
+		.timeline-content {
+		    flex-grow: 1;
+			padding: 0;
+		}
+		
+		.timeline-content p {
+			padding: 0;
+			margin-bottom: 0;
+		}
+
+		.timeline-time {
+		    font-size: 0.8rem;
+		    color: #6c757d;
+		    white-space: nowrap;
+		}
+
+		.timeline-connector {
+		    width: 2px;
+		    height: 40px;
+		    background-color: #e0e0e0;
+		    margin-left: 20px;
+		    margin-bottom: -10px;
+		}
+
+		.timeline-badge {
+		    background-color: #e74c3c;
+		    color: white;
+		    padding: 2px 5px;
+		    border-radius: 5px;
+		    font-size: 0.8rem;
+		    display: inline-block;
+		    margin-top: 5px;
+		}
+
+		.timeline-image {
+		    width: 100px;
+		    height: auto;
+		    margin-top: 10px;
+		    border-radius: 5px;
+		}
+
+
+        .main-issues-content {
+            display: flex;
+            width: 100%;
+            position: relative;
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .subheader {
+            font-size: 1.25rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .field {
+            margin-bottom: 10px;
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .field-label {
+            font-weight: bold;
+            width: 150px;
+        }
+
+        .sidebar2 {
+            width: 300px;
+            height: 84vh;
+            position: fixed;
+            right: -300px;
+            transition: right 0.3s ease;
+            background-color: white;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar2 .nav-item {
+            padding: 10px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar2 .sidebar-icon {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .open-sidebar-btn {
+            position: fixed;
+            right: 0;
+            height: 100%;
+            width: 40px;
+            display: flex;
+            border-top: 1px solid #e0e0e0;
+            justify-content: center;
+            background-color: white;
+            cursor: pointer;
+            z-index: 1001;
+            border-left: 1px solid #e0e0e0;
+        }
+		
+		.sidebar-btn {
+			margin-top:20px;
+		}
+		
+
+        .sidebar-open .sidebar2 {
+            right: 40px;
+			border: 1px solid #e0e0e0;
+        }
+
+        .comments-section {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+			
+        }
+
+        .comments-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .comment {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .comment img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .comment-content {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .comment-content h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .comment-content p {
+            margin: 5px 0 0 0;
+        }
+
+        .comment-content time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            margin-bottom: 10px;
+        }
+
+        .comment-form button {
+            align-self: flex-end;
+        }
+
+        .no-comments {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+			margin-bottom:350px;
+        }
+
+        .no-comments img {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header-content">
+        <div class="header2">
+            <div class="d-flex flex-column align-items-start">
+                <a href="/vehicles" class="btn btn-link text-decoration-none backButton"> 
+                    <i class="bi bi-arrow-left"></i> Issues
+                </a>
+                <h1 class="main-title">Issue Title</h1>
+            </div>
+            <div class="header-buttons">
+                <button class="btn btn-outline-primary me-2" type="button">Edit</button>
+                <button class="btn btn-primary" type="button">Resolve</button>
+            </div>
+        </div>
+        <div class="main-issues-content">
+            <div class="details">
+                <h2 class="section-header">Details</h2>
+                <h3 class="subheader">Pinned Fields</h3>
+                <h3 class="subheader">All Fields</h3>
+                <div class="field">
+                    <div class="field-label">Issue #</div>
+                    <div class="field-value">99</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Status</div>
+                    <div class="field-value">Open</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Summary</div>
+                    <div class="field-value">[Inspection] Nail in Tire</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Description</div>
+                    <div class="field-value">Failed inspection</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Priority</div>
+                    <div class="field-value">No Priority</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Vehicle</div>
+                    <div class="field-value">AP101</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Reported Date</div>
+                    <div class="field-value">05/14/2024 10:12 PM</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Reported By</div>
+                    <div class="field-value">Sara Ciskie</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Source</div>
+                    <div class="field-value">Inspection Submission #25450531</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Assigned To</div>
+                    <div class="field-value">-</div>
+                </div>
+            </div>
+
+			<div class="timeline">
+			        <h2 class="section-header">Timeline</h2>
+			        <div class="timeline-item">
+			            <div class="timeline-icon">
+			                <img src="/assets/img/warning.png" alt="Caution Icon">
+			            </div>
+			            <div class="timeline-content">
+			                <p><strong>Issue Opened</strong> by workflow</p>
+			            </div>
+			            <div class="timeline-time">3m</div>
+			        </div>
+			        <div class="timeline-connector"></div>
+			        <div class="timeline-item">
+			            <div class="timeline-icon">
+			                <img src="/assets/img/profile-img.jpg" alt="Grace Elliott">
+			            </div>
+			            <div class="timeline-content">
+			                <p><strong>Grace Elliott</strong> submitted an inspection item</p>
+			               	<p><a href="#">Inspection Submission #16084640</a></p>
+			                <p><div class="timeline-badge">NO</div></p>
+			                <img src="/assets/img/car-inspection.png" alt="Inspection Image" class="timeline-image">
+			            </div>
+			            <div class="timeline-time">3m</div>
+			        </div>
+			    </div>
+            <div class="sidebar2">
+				<h3>Comments</h3>
+                <div class="comments-section">
+					
+                    <div class="no-comments">
+						<img src="/assets/img/comment.png" alt="Comment Icon">
+
+
+                        <p>Start a conversation or leave a note by adding a comment below.</p>
+                    </div>
+                </div>
+                <div class="comment-form">
+                    <textarea placeholder="Add a Comment"></textarea>
+                </div> 
+            </div>
+            <div class="open-sidebar-btn" onclick="toggleSidebar()">
+				<div class="sidebar-btn"> |→</div>
+               
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-open');
+        }
+    </script>
+</body>
+</html>

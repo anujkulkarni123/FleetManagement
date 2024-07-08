@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>State</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="mx-auto" style="max-width: 90%;">
+        <h1 class="mt-2">States</h1>
+        <div>
+            <div class="card ms-5 me-5 mt-5 shadow">
+                <div class="card-header">Add a New State</div>
+                <div class="card-body">
+                    <form class="row g-3" th:action="@{/states/addNew}" method="post">
+                        <div class="col-md-6">
+                            <label for="inputName" class="form-label">Name</label> 
+                            <input type="text" class="form-control" id="inputName" name="stateName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputCapital" class="form-label">Capital</label> 
+                            <input type="text" class="form-control" id="inputCapital" name="capital" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputCountry" class="form-label">Country</label> 
+                            <select class="form-control" id="inputCountry" name="countryId" required>
+                                <option th:each="country : ${countries}" th:value="${country.countryId}" th:text="${country.countryName}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputCode" class="form-label">Code</label> 
+                            <input type="text" class="form-control" id="inputCode" name="code" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <table class="table table-hover table-bordered mt-5">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Code</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Capital</th>
+                        <th scope="col">Country</th>
+                        <th class="col-1" scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="state : ${states}">
+                        <td th:text="${state.code}"></td>
+                        <td th:text="${state.stateName}"></td>
+                        <td th:text="${state.capital}"></td>
+                        <td th:text="${state.country.countryName}"></td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-primary" th:href="@{/states/findById/(id=${state.stateId})}">
+                                    <i class="icon_pencil-edit"></i>
+                                </a> 
+                                <a class="btn btn-success" id="detailsButton" th:href="@{/states/details/(id=${state.stateId})}">
+                                    <i class="icon_document_alt"></i>
+                                </a> 
+                                <a class="btn btn-danger" id="deleteButton" th:href="@{/states/delete/{id}(id=${state.stateId})}">
+                                    <i class="icon_close_alt2"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
