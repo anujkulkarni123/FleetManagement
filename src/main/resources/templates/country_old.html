@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Country Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Include Font Awesome -->
+</head>
+<body>
+    <div class="container">
+        <h2>Country Management</h2>
+        
+        <!-- Error Message -->
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+        
+        <!-- Country Form -->
+        <div class="card mt-3">
+            <div class="card-header">Add / Update Country</div>
+            <div class="card-body">
+                <form th:action="@{/countries/save}" method="post">
+                    <input type="hidden" name="countryId" th:value="${country.countryId}" />
+                    <div class="form-group">
+                        <label for="countryCode">Country Code</label>
+                        <input type="text" id="countryCode" name="countryCode" th:value="${country.countryCode}" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="capital">Capital</label>
+                        <input type="text" id="capital" name="capital" th:value="${country.capital}" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Country Name</label>
+                        <textarea id="description" name="description" class="form-control" required th:text="${country.description}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="nationality">Nationality</label>
+                        <input type="text" id="nationality" name="nationality" th:value="${country.nationality}" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="continent">Continent</label>
+                        <input type="text" id="continent" name="continent" th:value="${country.continent}" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Country List -->
+        <div class="card mt-3">
+            <div class="card-header">Country List</div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Code</th>
+                            <th>Capital</th>
+                            <th>Description</th>
+                            <th>Nationality</th>
+                            <th>Continent</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="country : ${countries}">
+                            <td th:text="${country.countryId}"></td>
+                            <td th:text="${country.countryCode}"></td>
+                            <td th:text="${country.capital}"></td>
+                            <td th:text="${country.description}"></td>
+                            <td th:text="${country.nationality}"></td>
+                            <td th:text="${country.continent}"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" th:href="@{/countries/findById/{id}(id=${country.countryId})}"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-success" id="detailsButton" th:href="@{/countries/findById/{id}(id=${country.countryId})}"><i class="fas fa-file-alt"></i></a>
+                                    <a class="btn btn-danger" id="deleteButton" th:href="@{/countries/delete/{id}(id=${country.countryId})}"><i class="fas fa-times"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

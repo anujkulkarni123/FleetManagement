@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+.main {
+    min-height: 84vh;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.vehicle-display {
+    min-height: 67vh;
+}
+
+.form-check {
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 10px;
+}
+
+.form-check:hover {
+    background-color: #f8f9fa; /* Change background color on hover */
+    transform: scale(1.02); /* Slightly scale up on hover */
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: 100px repeat(7, 1fr);
+    border: 1px solid #dee2e6;
+    overflow-y: scroll; /* Make the calendar scrollable */
+    max-height: 600px; /* Set a max height to keep the div height the same */
+}
+
+.calendar .time-slot, .calendar .day-header {
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.calendar .day-header {
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+
+.calendar .time-slot {
+    border-right: 1px solid #dee2e6;
+}
+
+.calendar .time-cell {
+    border-top: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    position: relative;
+    height: 50px;
+}
+
+.appointment {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 123, 255, 0.5); /* Make appointment colors translucent */
+    border: 1px solid rgba(0, 123, 255, 0.5); /* Match border color to the background */
+    border-radius: 4px;
+    padding: 2px;
+    color: white;
+    overflow: hidden; /* Prevent overflow of appointment content */
+}
+
+.appointment-tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 10;
+}
+
+.appointment:hover .appointment-tooltip {
+    opacity: 1;
+}
