@@ -1,0 +1,297 @@
+body {
+           display: flex;
+           flex-direction: column;
+           margin: 0;
+           padding: 0;
+       }
+       .backButton {
+           margin-top: 10px;
+       }
+       .page-header-content {
+           margin-left: 60px;
+           margin-top: 30px;
+       }
+       .main-title {
+           padding-left: 20px;
+           margin-top: 5px;
+           margin-bottom: 0;
+       }
+       .header2 {
+           background-color: white;
+           width: calc(100% - 220px);
+           margin-left: 220px;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           display: flex;
+           flex-direction: column;
+           align-items: flex-start;
+           position: relative;
+           margin-bottom: 0;
+       }
+		.header2 .header-buttons {
+		    position: absolute;
+		    bottom: 20px;
+		    right: 20px;
+		}
+		
+		.header-buttons {
+			
+		}
+		
+		.header-buttons img {
+		    border-radius: 50%;
+		   
+		}
+		.header-buttons button {
+		    background-color: white;
+		    border: 1px solid lightgrey;
+		    margin-left: 10px;
+			border-radius:10px;
+			padding: 7px;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+       .header2 .btn {
+           margin-left: 10px;
+       }
+       .edit-labels {
+			margin-top: 5px;
+			background-color: white;
+           margin-left: 20px;
+           border: 1px dashed lightgrey;
+			border-radius: 15px;
+           padding: 5px;
+       }
+       .details, .timeline {
+           width: 40%;
+           margin-top: 20px;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           background-color: white;
+       }
+       .details {
+           margin-right: 10px;
+           margin-left: 250px;
+       }
+		.timeline {
+		    margin-left: 10px;
+			margin-right: 50px;
+		    padding: 20px;
+		}
+		.timeline-item {
+		    display: flex;
+		    align-items: flex-start;
+		    margin-bottom: 20px;
+		}
+		.timeline-icon {
+		    width: 40px;
+		    height: 40px;
+		    margin-right: 10px;
+		}
+		.timeline-icon img {
+		    width: 100%;
+		    height: 100%;
+		    border-radius: 50%;
+		}
+		
+		.timeline-icon2 {
+		    width: 40px;
+		    height: 40px;
+		  
+		}
+		.timeline-icon2 img {
+		    width: 100%;
+		    height: 100%;
+		    border-radius: 50%;
+		}
+		.timeline-content {
+		    flex-grow: 1;
+			padding: 0;
+		}
+		
+		.timeline-content p {
+			padding: 0;
+			margin-bottom: 0;
+		}
+		.timeline-time {
+		    font-size: 0.8rem;
+		    color: #6c757d;
+		    white-space: nowrap;
+		}
+		.timeline-connector {
+		    width: 2px;
+		    height: 40px;
+		    background-color: #e0e0e0;
+		    margin-left: 20px;
+		    margin-bottom: -10px;
+		}
+		.timeline-badge {
+		    background-color: #e74c3c;
+		    color: white;
+		    padding: 2px 5px;
+		    border-radius: 5px;
+		    font-size: 0.8rem;
+		    display: inline-block;
+		    margin-top: 5px;
+		}
+		.timeline-image {
+		    width: 100px;
+		    height: auto;
+		    margin-top: 10px;
+		    border-radius: 5px;
+		}
+       .main-issues-content {
+           display: flex;
+           width: 100%;
+           position: relative;
+       }
+       .section-header {
+           font-size: 1.5rem;
+           margin-bottom: 20px;
+       }
+       .subheader {
+           font-size: 1.25rem;
+           margin-top: 20px;
+           margin-bottom: 10px;
+       }
+       .field {
+           margin-bottom: 10px;
+           display: flex;
+           border-bottom: 1px solid #e0e0e0;
+           padding-bottom: 10px;
+       }
+       .field-label {
+           font-weight: bold;
+           width: 150px;
+       }
+       .sidebar2 {
+           width: 300px;
+           height: 84vh;
+           position: fixed;
+           right: -300px;
+           transition: right 0.3s ease;
+           background-color: white;
+           z-index: 1000;
+           display: flex;
+           flex-direction: column;
+           justify-content: space-between;
+       }
+       .sidebar2 .nav-item {
+           padding: 10px 0;
+           cursor: pointer;
+           display: flex;
+           align-items: center;
+       }
+       .sidebar2 .sidebar-icon {
+           margin-right: 10px;
+           width: 20px;
+       }
+       .open-sidebar-btn {
+           position: fixed;
+           right: 0;
+           height: 100%;
+           width: 40px;
+           display: flex;
+           border-top: 1px solid #e0e0e0;
+           justify-content: center;
+           background-color: white;
+           cursor: pointer;
+           z-index: 1001;
+           border-left: 1px solid #e0e0e0;
+       }
+		
+		.sidebar-btn {
+			margin-top:20px;
+		}
+		
+       .sidebar-open .sidebar2 {
+           right: 40px;
+			border: 1px solid #e0e0e0;
+       }
+       .comments-section {
+           margin-top: 20px;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+			
+       }
+       .comments-section h3 {
+           font-size: 1.25rem;
+           margin-bottom: 10px;
+       }
+       .comment {
+           display: flex;
+           align-items: flex-start;
+           margin-bottom: 10px;
+       }
+       .comment img {
+           border-radius: 50%;
+           width: 40px;
+           height: 40px;
+           margin-right: 10px;
+       }
+       .comment-content {
+           background-color: #f8f9fa;
+           border-radius: 8px;
+           padding: 10px;
+           width: 100%;
+       }
+       .comment-content h4 {
+           margin: 0;
+           font-size: 1rem;
+       }
+       .comment-content p {
+           margin: 5px 0 0 0;
+       }
+       .comment-content time {
+           font-size: 0.8rem;
+           color: #6c757d;
+       }
+       .comment-form {
+           display: flex;
+           flex-direction: column;
+           margin-top: 20px;
+       }
+       .comment-form textarea {
+           width: 100%;
+           padding: 10px;
+           border-radius: 8px;
+           border: 1px solid #ced4da;
+           margin-bottom: 10px;
+       }
+       .comment-form button {
+           align-self: flex-end;
+       }
+       .no-comments {
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           text-align: center;
+           margin-top: 20px;
+			margin-bottom:350px;
+       }
+       .no-comments img {
+           width: 30px;
+           height: 30px;
+           margin-bottom: 10px;
+       }
+		
+		.resolve-btn {
+			background-color: green;
+			color: white;
+		}
+		
+		.submit-button {
+		    width: 100%;
+		    background-color: green;
+		    color: white;
+		    border: none;
+		    border-radius: 10px; /* Adjust the value for more or less curvature */
+		    padding: 10px 0; /* Adjust padding as needed */
+		    font-size: 16px; /* Adjust font size as needed */
+		    cursor: pointer;
+		}
+
+		.submit-button:hover {
+		    background-color: darkgreen; /* Optional: Darken the button on hover */
+		}
+
+

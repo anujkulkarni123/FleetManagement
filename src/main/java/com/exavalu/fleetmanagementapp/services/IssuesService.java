@@ -28,19 +28,19 @@ public class IssuesService {
 
     public Optional<Issues> updateIssues(Integer id, Issues issuesDetails) {
         return issuesRepository.findById(id).map(issues -> {
-            issues.setPriority(issuesDetails.getPriority());
-            issues.setVehicle(issuesDetails.getVehicle());
-            issues.setAssetType(issuesDetails.getAssetType());
-            issues.setIssueNumber(issuesDetails.getIssueNumber());
-            issues.setSummary(issuesDetails.getSummary());
-            issues.setStatus(issuesDetails.getStatus());
-            issues.setSource(issuesDetails.getSource());
-            issues.setReportedDate(issuesDetails.getReportedDate());
-            issues.setAssignedUser(issuesDetails.getAssignedUser());
-            issues.setLabels(issuesDetails.getLabels());
-            issues.setWatchers(issuesDetails.getWatchers());
-            issues.setTeam(issuesDetails.getTeam());
-            issues.setService(issuesDetails.getService());
+//            issues.setPriority(issuesDetails.getPriority());
+//            issues.setVehicle(issuesDetails.getVehicle());
+//            issues.setAssetType(issuesDetails.getAssetType());
+//            issues.setIssueNumber(issuesDetails.getIssueNumber());
+//            issues.setSummary(issuesDetails.getSummary());
+//            issues.setStatus(issuesDetails.getStatus());
+//            issues.setSource(issuesDetails.getSource());
+//            issues.setReportedDate(issuesDetails.getReportedDate());
+//            issues.setAssignedUser(issuesDetails.getAssignedUser());
+//            issues.setLabels(issuesDetails.getLabels());
+//            issues.setWatchers(issuesDetails.getWatchers());
+//            issues.setTeam(issuesDetails.getTeam());
+//            issues.setService(issuesDetails.getService());
             return issuesRepository.save(issues);
         });
     }

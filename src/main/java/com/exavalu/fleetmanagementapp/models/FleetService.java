@@ -53,8 +53,8 @@ public class FleetService {
     @ElementCollection
     private List<String> serviceTasks;
     
-    @OneToMany(mappedBy = "service")
-    private List<Issues> issues;
+//    @OneToMany(mappedBy = "service")
+//    private List<Issues> issues;
     
     @Column(nullable = false)
     private String vendor;
@@ -132,13 +132,13 @@ public class FleetService {
 		this.serviceTasks = serviceTasks;
 	}
 
-	public List<Issues> getIssues() {
-		return issues;
-	}
-
-	public void setIssues(List<Issues> issues) {
-		this.issues = issues;
-	}
+//	public List<Issues> getIssues() {
+//		return issues;
+//	}
+//
+//	public void setIssues(List<Issues> issues) {
+//		this.issues = issues;
+//	}
 
 	public String getVendor() {
 		return vendor;
