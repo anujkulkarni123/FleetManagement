@@ -3,6 +3,8 @@ package com.exavalu.fleetmanagementapp.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +19,9 @@ public class VehicleReminder extends Reminder {
     @Column(nullable = true)
     private String renewalType;
 
-    @Column(nullable = true)
-    private String watchers;
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private User watchers;
 
 	public String getRenewalType() {
 		return renewalType;
@@ -28,11 +31,11 @@ public class VehicleReminder extends Reminder {
 		this.renewalType = renewalType;
 	}
 
-	public String getWatchers() {
+	public User getWatchers() {
 		return watchers;
 	}
 
-	public void setWatchers(String watchers) {
+	public void setWatchers(User watchers) {
 		this.watchers = watchers;
 	}
 

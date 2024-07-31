@@ -5,6 +5,7 @@ import com.exavalu.fleetmanagementapp.repositories.VehicleReminderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,8 @@ public class VehicleReminderService {
         return vehicleReminderRepository.save(vehicleReminder);
     }
 
-    public Optional<VehicleReminder> updateVehicleReminder(Integer id, VehicleReminder vehicleReminderDetails) {
-        return vehicleReminderRepository.findById(id).map(vehicleReminder -> {
+    public Optional<VehicleReminder> updateVehicleReminder(VehicleReminder vehicleReminderDetails) {
+        return vehicleReminderRepository.findById(vehicleReminderDetails.getId()).map(vehicleReminder -> {
             vehicleReminder.setRenewalType(vehicleReminderDetails.getRenewalType());
             vehicleReminder.setWatchers(vehicleReminderDetails.getWatchers());
             vehicleReminder.setStatus(vehicleReminderDetails.getStatus());

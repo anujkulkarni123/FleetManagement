@@ -3,6 +3,8 @@ package com.exavalu.fleetmanagementapp.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +24,10 @@ public class ContactReminder extends Reminder {
     @Column(nullable = true)
     private LocalDate dueDate;
 
-    @Column(nullable = true)
-    private String watchers;
-
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = true)
+    private User watchers;
+    
 	public String getRenewalType() {
 		return renewalType;
 	}
@@ -41,11 +44,11 @@ public class ContactReminder extends Reminder {
 		this.dueDate = dueDate;
 	}
 
-	public String getWatchers() {
+	public User getWatchers() {
 		return watchers;
 	}
 
-	public void setWatchers(String watchers) {
+	public void setWatchers(User watchers) {
 		this.watchers = watchers;
 	}
     

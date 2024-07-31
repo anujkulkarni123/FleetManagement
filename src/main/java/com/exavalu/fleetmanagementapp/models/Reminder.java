@@ -37,7 +37,7 @@ public abstract class Reminder {
     private Team team;
 
     @ManyToOne
-    @JoinColumn(name = "vehicleId", nullable = false)
+    @JoinColumn(name = "vehicleId", nullable = true)
     private Vehicle vehicle;
 
     @Column(nullable = false)

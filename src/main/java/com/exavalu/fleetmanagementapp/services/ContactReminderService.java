@@ -41,4 +41,9 @@ public class ContactReminderService {
             return true;
         }).orElse(false);
     }
+
+	public void updateContactReminder(ContactReminder contactReminder) {
+		// TODO Auto-generated method stub
+		
+	}
 }

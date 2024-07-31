@@ -58,8 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 });
 
+
 document.addEventListener('DOMContentLoaded', () => {
     let selectedVehicleIds = new Set();
+    let selectedServiceTaskIds = new Set();
 
     // Tippy.js popover initialization
     const popoverButtons = document.querySelectorAll('[data-content-id]');
@@ -91,18 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Event delegation for checkbox changes
-    document.addEventListener('change', (event) => {
-        if (event.target.classList.contains('vehicle-checkbox')) {
-            const vehicleId = event.target.value;
-            if (event.target.checked) {
-                selectedVehicleIds.add(vehicleId);
-            } else {
-                selectedVehicleIds.delete(vehicleId);
-            }
-        }
-    });
-
     // Close Tippy popovers when clicking outside
     document.addEventListener('click', (e) => {
         const target = e.target;
@@ -119,23 +109,102 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Event delegation for checkbox changes
+    document.addEventListener('change', (event) => {
+        if (event.target.classList.contains('vehicle-checkbox')) {
+            console.log('Vehicle checkbox triggered');
+            const vehicleId = event.target.value;
+            if (event.target.checked) {
+                selectedVehicleIds.add(vehicleId);
+            } else {
+                selectedVehicleIds.delete(vehicleId);
+            }
+            console.log('Selected vehicle IDs:', Array.from(selectedVehicleIds));
+        } else if (event.target.classList.contains('service-task-checkbox')) {
+            console.log('Service task checkbox triggered');
+            const taskId = event.target.value;
+            if (event.target.checked) {
+                selectedServiceTaskIds.add(taskId);
+            } else {
+                selectedServiceTaskIds.delete(taskId);
+            }
+            console.log('Selected service task IDs:', Array.from(selectedServiceTaskIds));
+        }
+    });
+
     // Apply button action
     window.applySelection = () => {
-        const uniqueVehicles = Array.from(selectedVehicleIds);
-        console.log('Selected vehicle IDs:', uniqueVehicles.sort());
+        const uniqueVehicles = Array.from(selectedVehicleIds).sort();
+        const uniqueServiceTasks = Array.from(selectedServiceTaskIds).sort();
+        const selectedItems = {
+            vehicles: uniqueVehicles,
+            serviceTasks: uniqueServiceTasks
+        };
+        console.log('Selected items:', selectedItems);
+        filterItems(selectedItems);
     };
 
     // Cancel button action
     window.cancelSelection = () => {
         selectedVehicleIds.clear();
+        selectedServiceTaskIds.clear();
         document.querySelectorAll('.vehicle-checkbox').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        document.querySelectorAll('.service-task-checkbox').forEach(checkbox => {
             checkbox.checked = false;
         });
         console.log('Selection cleared');
     };
 });
 
+const filterItems = (selectedItems) => {
+    fetch('/service-reminders/filter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(selectedItems)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Filtered Service Reminders:', data);
+        updateRemindersUI(data)
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
 
+function updateRemindersUI(reminders) {
+    const tbody = document.querySelector('#serviceRemindersTable tbody');
+    tbody.innerHTML = ''; // Clear the current table body content
+
+    reminders.forEach(reminder => {
+        const row = document.createElement('tr');
+        row.dataset.id = reminder.id;
+
+        row.innerHTML = `
+            <td>${reminder.vehicle.make} ${reminder.vehicle.model} - ${reminder.vehicle.year}</td>
+            <td>${reminder.serviceTask.name}</td>
+            <td>${reminder.activeWorkOrder || ''}</td>
+            <td>${reminder.status}</td>
+            <td>${reminder.nextDueDate}</td>
+            <td>${reminder.lastCompletedDate || ''}</td>
+            <td>${reminder.compliance || ''}</td>
+            <td>
+                <button class="btn btn-primary btn-sm edit-btn">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm delete-btn" data-id="${reminder.id}">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
 
 function showServiceReminderModal(reminderId) {
 	fetch(`/service-reminders/${reminderId}`)
@@ -150,7 +219,7 @@ function showServiceReminderModal(reminderId) {
 
 			document.getElementById('serviceReminderId').value = reminder.id || '';
 			document.getElementById('teamId').value = reminder.team ? reminder.team.id : 1;
-			document.getElementById('vehicleSelect').value = reminder.vehicle ? reminder.vehicle.id : '';
+			document.getElementById('vehicleSelect').value = reminder.vehicle || '';
 			document.getElementById('status').value = reminder.status || '';
 			document.getElementById('nextDueDate').value = reminder.nextDueDate || '';
 			document.getElementById('serviceTaskSelect').value = reminder.serviceTask ? reminder.serviceTask.id : '';
@@ -257,23 +326,3 @@ function clearServiceReminderForm() {
 	$('#serviceReminderModal').modal('hide');
 }
 
-function toggleCheckbox(element) {
-	console.log('checked');
-	element.classList.toggle('checked');
-}
-
-function cancelSelection() {
-	const checkboxes = document.querySelectorAll('.checkbox-container');
-	checkboxes.forEach(checkbox => checkbox.classList.remove('checked'));
-}
-
-function applySelection() {
-	const selectedVehicles = [];
-	const checkboxes = document.querySelectorAll('.checkbox-container.checked');
-	checkboxes.forEach(checkbox => {
-		const vehicleId = checkbox.getAttribute('data-vehicle-id');
-		selectedVehicles.push(vehicleId);
-	});
-	console.log('Selected vehicles:', selectedVehicles);
-	// Handle the selected vehicles as needed
-}

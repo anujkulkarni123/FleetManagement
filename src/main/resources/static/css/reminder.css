@@ -285,3 +285,13 @@
 	height: 50px;
 }
 
+.popover-list-scrollable {
+        max-height: 300px; 
+        overflow-y: auto;
+}
+
+.table-responsive {
+    max-height: 400px;
+    overflow-y: auto;
+}
+

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+
+
 <html lang="en">
 
 <head>
@@ -354,13 +357,12 @@
 
 				<div class="row p-2" id="title-row">
 					<div class="col-md-8">
-						<h3>Service Reminders</h3>
+						<h3>Contact Reminders</h3>
 					</div>
 					<div class="col-md-4 my-1 add-reminder d-flex justify-content-end">
 						<button type="button" class="btn btn-outline-primary mr-2">Enable
 							Forecasting</button>
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#serviceReminderModal">Add Service Reminder</button>
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contactReminderModal">Add Contact Reminder</button>
 					</div>
 
 				</div>
@@ -430,170 +432,147 @@
 			</div>
 
 			<div class="row p-2 border-top">
-			    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-			        <table class="table table-no-border" id="serviceRemindersTable">
-			            <thead>
-			                <tr>
-			                    <th class="vehicle-column">Vehicle</th>
-			                    <th class="serviceTask-column">Service Task</th>
-			                    <th class="workorder-column">Active Work Order</th>
-			                    <th class="status-column">Status</th>
-			                    <th class="due-date-column">Next Due Date</th>
-			                    <th class="completed-date-column">Last Completed Date</th>
-			                    <th class="compliance-column">Compliance</th>
-			                    <th class="actions-column">Actions</th>
-			                </tr>
-			            </thead>
-			            <tbody>
-			                <tr th:each="reminder : ${reminders}" th:data-id="${reminder.id}">
-			                    <td th:text="${reminder.vehicle.make} + ' ' + ${reminder.vehicle.model} + ' - ' + ${reminder.vehicle.year}"></td>
-			                    <td th:text="${reminder.serviceTask.name}"></td>
-			                    <td th:text="${reminder.activeWorkOrder}"></td>
-			                    <td th:text="${reminder.status}"></td>
-			                    <td th:text="${reminder.nextDueDate}"></td>
-			                    <td th:text="${reminder.lastCompletedDate}"></td>
-			                    <td th:text="${reminder.compliance}"></td>
-			                    <td>
-			                        <button class="btn btn-primary btn-sm edit-btn">
-			                            <i class="bi bi-pencil"></i>
-			                        </button>
-			                        <button class="btn btn-danger btn-sm delete-btn" th:data-id="${reminder.id}">
-			                            <i class="bi bi-trash"></i>
-			                        </button>
-			                    </td>
-			                </tr>
-			            </tbody>
-			        </table>
-			    </div>
+				<div class="table-responsive"
+					style="max-height: 400px; overflow-y: auto;">
+					<table class="table table-no-border" id="contactRemindersTable">
+					    <thead>
+					        <tr>
+					            <th class="renewalType-column">Renewal Type</th>
+					            <th class="dueDate-column">Due Date</th>
+					            <th class="watchers-column">Watchers</th>
+					            <th class="status-column">Status</th>
+					            <th class="due-date-column">Next Due Date</th>
+					            <th class="actions-column">Actions</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr th:each="reminder : ${reminders}" th:data-id="${reminder.id}">
+					            <td th:text="${reminder.renewalType}"></td>
+					            <td th:text="${reminder.dueDate}"></td>
+					            <td th:text="${reminder.watchers}"></td>
+					            <td th:text="${reminder.status}"></td>
+					            <td th:text="${reminder.nextDueDate}"></td>
+					            <td>
+					                <button class="btn btn-primary btn-sm edit-btn">
+					                    <i class="bi bi-pencil"></i>
+					                </button>
+					                <button class="btn btn-danger btn-sm delete-btn"
+					                    th:data-id="${reminder.id}">
+					                    <i class="bi bi-trash"></i>
+					                </button>
+					            </td>
+					        </tr>
+					    </tbody>
+					</table>
+				</div>
 			</div>
 		</section>
 
-		<!-- Service Reminder Modal HTML Structure -->
-		<div class="modal fade" id="serviceReminderModal" tabindex="-1"
-			aria-labelledby="serviceReminderModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="serviceReminderModalLabel">Create
-							Service Reminder</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close" onclick="clearServiceReminderForm()"></button>
+		<!-- Contact Reminder Modal HTML Structure -->
+		<div class="modal fade" id="contactReminderModal" tabindex="-1"
+		    aria-labelledby="contactReminderModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title" id="contactReminderModalLabel">Create
+		                    Contact Reminder</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal"
+		                    aria-label="Close" onclick="clearContactReminderForm()"></button>
+		            </div>
+		            <div class="modal-body">
+		                <div id="contactReminderForm">
+		                    <input type="hidden" id="contactReminderId" name="contactReminderId">
+		                    <input type="hidden" id="teamId" name="teamId" value="1"> <!-- Hidden Team ID -->
+		
+		                    <div class="mb-3">
+		                        <label for="renewalType" class="form-label">Renewal Type</label>
+		                        <input type="text" class="form-control" id="renewalType"
+		                            name="renewalType" required>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="dueDate" class="form-label">Due Date</label>
+		                        <input type="date" class="form-control" id="dueDate" name="dueDate">
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="watchersSelect" class="form-label">Watchers</label>
+		                        <select class="form-control" id="watchersSelect"
+		                            name="watcherId" required>
+		                            <th:block th:each="user : ${watcherList}">
+		                                <option th:value="${user.userId}"
+		                                    th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+		                            </th:block>
+		                        </select>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="status" class="form-label">Status</label>
+		                        <input type="text" class="form-control" id="status" name="status"
+		                            required>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="nextDueDate" class="form-label">Next Due
+		                            Date</label>
+		                        <input type="date" class="form-control" id="nextDueDate"
+		                            name="nextDueDate" required>
+		                    </div>
+		
+		                    <button id="saveContactReminderBtn" class="btn btn-primary"
+		                        onclick="saveContactReminder()">Save Contact Reminder</button>
+		                    <button id="deleteContactReminderBtn" class="btn btn-danger"
+		                        style="display: none;" onclick="deleteContactReminder()">Delete
+		                        Contact Reminder</button>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 
-					</div>
-					<div class="modal-body">
-						<div id="serviceReminderForm">
-							<input type="hidden" id="serviceReminderId"
-								name="serviceReminderId"> <input type="hidden"
-								id="teamId" name="teamId" value="1">
-							<!-- Hidden Team ID -->
-
-							<div class="mb-3">
-								<label for="vehicleSelect" class="form-label">Vehicle</label> <select
-									class="form-control" id="vehicleSelect" name="vehicleId"
-									required>
-									<th:block th:each="vehicle : ${vehicleList}">
-										<option th:value="${vehicle.vehicleId}"
-											th:text="${vehicle.make} + ' ' + ${vehicle.model} + ' ' + ${vehicle.year}"></option>
-									</th:block>
-								</select>
+		<div id="vehicleContent" class="d-none">
+			<div class="popover-list popover-list-scrollable">
+				<th:block th:each="vehicle : ${vehicleList}">
+					<div class="popover-item d-flex align-items-center">
+						<input type="checkbox" class="vehicle-checkbox"
+							th:value="${vehicle.vehicleId}"> <img
+							src="../img/car-image.jpeg" class="popover-item-image mr-2"
+							alt="Vehicle">
+						<div class="popover-item-info">
+							<strong
+								th:text="${vehicle.vehicleId} + ' [' + ${vehicle.year} + ' ' + ${vehicle.make} + ' ' + ${vehicle.model} + ']'"></strong>
+							<div class="popover-item-status mt-1">
+								<span class="badge badge-success"
+									th:if="${vehicle.status == '1'}">Active</span> <span
+									class="badge badge-danger" th:if="${vehicle.status == '0'}">Out
+									of Service</span> <span class="badge badge-secondary"
+									th:text="${vehicle.type}"></span> <span
+									class="badge badge-secondary" th:text="${vehicle.group}"></span>
 							</div>
-							<div class="mb-3">
-								<label for="status" class="form-label">Status</label> <input
-									type="text" class="form-control" id="status" name="status"
-									required>
-							</div>
-							<div class="mb-3">
-								<label for="nextDueDate" class="form-label">Next Due
-									Date</label> <input type="date" class="form-control" id="nextDueDate"
-									name="nextDueDate" required>
-							</div>
-							<div class="mb-3">
-								<label for="serviceTaskSelect" class="form-label">Service
-									Task</label> <select class="form-control" id="serviceTaskSelect"
-									name="serviceTaskId" required>
-									<th:block th:each="task : ${serviceTaskList}">
-										<option th:value="${task.id}" th:text="${task.name}"></option>
-									</th:block>
-								</select>
-							</div>
-							<div class="mb-3">
-								<label for="activeWorkOrder" class="form-label">Active
-									Work Order</label> <input type="text" class="form-control"
-									id="activeWorkOrder" name="activeWorkOrder">
-							</div>
-							<div class="mb-3">
-								<label for="lastCompletedDate" class="form-label">Last
-									Completed Date</label> <input type="date" class="form-control"
-									id="lastCompletedDate" name="lastCompletedDate">
-							</div>
-							<div class="mb-3">
-								<label for="compliance" class="form-label">Compliance</label> <input
-									type="text" class="form-control" id="compliance"
-									name="compliance">
-							</div>
-							<div class="mb-3">
-								<label for="watchersSelect" class="form-label">Watchers</label>
-								<select class="form-control" id="watchersSelect"
-									name="watcherId" required>
-									<th:block th:each="user : ${watcherList}">
-										<option th:value="${user.userId}"
-											th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
-									</th:block>
-								</select>
-							</div>
-
-							<button id="saveServiceReminderBtn" class="btn btn-primary"
-								onclick="saveServiceReminder()">Save Service Reminder</button>
-							<button id="deleteServiceReminderBtn" class="btn btn-danger"
-								style="display: none;" onclick="deleteServiceReminder()">Delete
-								Service Reminder</button>
 						</div>
 					</div>
-				</div>
+				</th:block>
+			</div>
+			<div class="popover-footer mt-2 d-flex justify-content-between">
+				<div class="btn btn-link" onclick="cancelSelection()">Cancel</div>
+				<div class="btn btn-primary" onclick="applySelection()">Apply</div>
 			</div>
 		</div>
 
-		<!-- Hidden divs for popover content -->
-		<div id="vehicleContent" class="d-none">
-		    <div class="popover-list popover-list-scrollable">
-		        <th:block th:each="vehicle : ${vehicleList}">
-		            <div class="popover-item d-flex align-items-center">
-		                <input type="checkbox" class="vehicle-checkbox" th:value="${vehicle.vehicleId}">
-		                <img src="../img/car-image.jpeg" class="popover-item-image mr-2" alt="Vehicle">
-		                <div class="popover-item-info">
-		                    <strong th:text="${vehicle.vehicleId} + ' [' + ${vehicle.year} + ' ' + ${vehicle.make} + ' ' + ${vehicle.model} + ']'"></strong>
-		                    <div class="popover-item-status mt-1">
-		                        <span class="badge badge-success" th:if="${vehicle.status == '1'}">Active</span>
-		                        <span class="badge badge-danger" th:if="${vehicle.status == '0'}">Out of Service</span>
-		                        <span class="badge badge-secondary" th:text="${vehicle.type}"></span>
-		                        <span class="badge badge-secondary" th:text="${vehicle.group}"></span>
-		                    </div>
-		                </div>
-		            </div>
-		        </th:block>
-		    </div>
-		    <div class="popover-footer mt-2 d-flex justify-content-between">
-		        <div class="btn btn-link" onclick="cancelSelection()">Cancel</div>
-		        <div class="btn btn-primary" onclick="applySelection()">Apply</div>
-		    </div>
+		<div id="watcherContent" class="d-none">
+			<div class="popover-list popover-list-scrollable">
+				<th:block th:each="user : ${watcherList}">
+					<div class="popover-item d-flex align-items-center">
+						<input type="checkbox" class="watcher-checkbox"
+							th:value="${user.userId}">
+						<div class="popover-item-info ml-2 pt-2">
+							<label th:text="${user.firstName} + ' ' + ${user.lastName}"></label>
+						</div>
+					</div>
+				</th:block>
+			</div>
+			<div class="popover-footer mt-2 d-flex justify-content-between">
+				<div class="btn btn-link" onclick="cancelSelection()">Cancel</div>
+				<div class="btn btn-primary" onclick="applySelection()">Apply</div>
+			</div>
 		</div>
-		
-		<div id="serviceTaskContent" class="d-none">
-		    <div class="popover-list popover-list-scrollable">
-		        <th:block th:each="task : ${serviceTaskList}">
-		            <div class="popover-item d-flex align-items-center">
-		                <input type="checkbox" class="service-task-checkbox" th:value="${task.id}">
-		                <div class="popover-item-info ml-2 pt-2">
-		                    <label th:text="${task.name}"></label>
-		                </div>
-		            </div>
-		        </th:block>
-		    </div>
-		    <div class="popover-footer mt-2 d-flex justify-content-between">
-		        <div class="btn btn-link" onclick="cancelSelection()">Cancel</div>
-		        <div class="btn btn-primary" onclick="applySelection()">Apply</div>
-		    </div>
-		</div>
+
 
 		<div id="vehicleGroupContent" class="d-none">
 			<!-- Content for vehicle group popover -->
@@ -646,7 +625,7 @@
 	</script>
 	<!-- Template Main JS File -->
 	<script src="../js/main.js"></script>
-	<script src="../js/serviceReminder.js"></script>
+	<script src="../js/contactReminder.js"></script>
 
 
 

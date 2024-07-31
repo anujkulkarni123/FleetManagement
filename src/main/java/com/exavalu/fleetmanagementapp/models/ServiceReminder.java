@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class ServiceReminder extends Reminder {
 
     @ManyToOne
-    @JoinColumn(name = "serviceTaskId", nullable = false)
+    @JoinColumn(name = "serviceTaskId", nullable = true)
     private ServiceTask serviceTask;
 
     @Column(nullable = true)

@@ -2,7 +2,8 @@ package com.exavalu.fleetmanagementapp.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -155,6 +157,32 @@ public class ServiceReminderController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+    
+    @PostMapping("/filter")
+    @ResponseBody
+    public List<ServiceReminder> getFilteredReminders(@RequestBody Map<String, List<Integer>> filterCriteria) {
+        List<Integer> vehicleIds = filterCriteria.get("vehicles");
+        List<Integer> serviceTaskIds = filterCriteria.get("serviceTasks");
+        
+        System.out.println(vehicleIds);
+
+        List<ServiceReminder> allReminders = serviceReminderService.getAllServiceReminders();
+
+        // Manual filtering with handling for empty filter criteria
+        List<ServiceReminder> filteredReminders = allReminders.stream()
+                .filter(reminder -> (vehicleIds.isEmpty() || vehicleIds.contains(reminder.getVehicle().getVehicleId())) &&
+                                    (serviceTaskIds.isEmpty() || serviceTaskIds.contains(reminder.getServiceTask().getId())))
+                .collect(Collectors.toList());
+
+        // Extracting and printing the filtered reminder IDs
+        List<Integer> filteredReminderIds = filteredReminders.stream()
+                .map(ServiceReminder::getId)
+                .collect(Collectors.toList());
+
+        System.out.println("Filtered Service Reminder IDs: " + filteredReminderIds);
+
+        return filteredReminders;
     }
 
 }
