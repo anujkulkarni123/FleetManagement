@@ -88,7 +88,7 @@ public class Issues {
 	public void setPriority(String priority) {
 		this.priority = priority;
 	}
-
+	
 	public Vehicle getVehicle() {
 		return vehicle;
 	}

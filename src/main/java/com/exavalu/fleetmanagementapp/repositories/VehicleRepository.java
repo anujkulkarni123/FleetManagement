@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.exavalu.fleetmanagementapp.models.Vehicle;
 
@@ -18,4 +19,13 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 	
 	@Query("SELECT v FROM Vehicle v WHERE v.watcher = 'archived' ")
 	List<Vehicle> findAllVehiclesArchived();
+	
+	@Query("SELECT v FROM Vehicle v WHERE v.group = ?1")
+	List<Vehicle> findAllVehiclesByGroup(String group);
+	
+	@Query("SELECT v FROM Vehicle v WHERE v.status = ?1")
+	List<Vehicle> findAllVehiclesByStatus(String status);
+	
+	@Query("SELECT v FROM Vehicle v WHERE v.user.id = :userId")
+	List<Vehicle> findAllVehiclesWithUser(@Param("userId") Integer userId);
 }

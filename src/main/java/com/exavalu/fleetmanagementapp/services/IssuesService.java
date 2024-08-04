@@ -5,6 +5,9 @@ import com.exavalu.fleetmanagementapp.repositories.IssuesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +20,23 @@ public class IssuesService {
     public List<Issues> getAllIssues() {
         return issuesRepository.findAll();
     }
+    
+    // dont have a duedate column right now, currently set 7 days to due date as considered late
+    public List<Issues> getAllIntervalIssues(Integer days) {
+    	ArrayList<Issues> lateIssues = new ArrayList<>();
+    	List<Issues> allIssues = getAllIssues();
+    	LocalDateTime now = LocalDateTime.now();
+        LocalDateTime sevenDaysAgo = now.minus(days, ChronoUnit.DAYS);
+
+    	for (Issues issue : allIssues) {
+            if (issue.getReportedDate().isBefore(sevenDaysAgo)) {
+                lateIssues.add(issue);
+            }
+        }
+    	System.out.println(lateIssues.size());
+    	return lateIssues;
+    }
+    
 
     public Optional<Issues> getIssuesById(Integer id) {
         return issuesRepository.findById(id);
