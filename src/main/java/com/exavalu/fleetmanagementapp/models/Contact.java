@@ -54,7 +54,7 @@ public class Contact {
     @Column(nullable = false)
     private String classifications;
 
-    @Column(nullable = true)
+    @Column(name = "`group`", nullable = false)
     private String group;
 
     @ManyToMany

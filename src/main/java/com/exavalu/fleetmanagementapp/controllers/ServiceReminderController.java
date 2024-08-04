@@ -54,6 +54,7 @@ public class ServiceReminderController {
     public String getAllServiceReminders(Model model) {
         List<ServiceReminder> reminders = serviceReminderService.getAllServiceReminders();
         List<ServiceTask> serviceTasks = serviceTaskService.getAllServiceTasks();
+        System.out.println("Finding team with id: " + 1);
         Team team = teamService.getTeamById(1);
         List<Vehicle> vehicles = vehicleService.getAllVehicles();
         List<User> users = userService.getAllUsers();

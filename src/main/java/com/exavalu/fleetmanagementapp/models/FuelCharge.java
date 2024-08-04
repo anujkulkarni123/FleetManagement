@@ -37,7 +37,7 @@ public class FuelCharge {
     @Column(nullable = false)
     private String meter;
 
-    @Column(nullable = false)
+    @Column(name = "`usage`", nullable = false)
     private double usage;
 
     @Column(nullable = false)

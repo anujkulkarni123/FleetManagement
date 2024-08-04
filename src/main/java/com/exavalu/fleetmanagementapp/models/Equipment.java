@@ -34,7 +34,7 @@ public class Equipment {
     @Column(nullable = false, unique = true)
     private String serialNumber;
 
-    @Column(nullable = false)
+    @Column(name = "`group`", nullable = false)
     private String group;
 
     @Column(nullable = false)

@@ -1,41 +1,65 @@
 package com.exavalu.fleetmanagementapp.controllers;
 
+import com.exavalu.fleetmanagementapp.models.Vehicle;
+import com.exavalu.fleetmanagementapp.services.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.exavalu.fleetmanagementapp.models.Vehicle;
-import com.exavalu.fleetmanagementapp.services.VehicleService;
-
-@RestController
-@RequestMapping("/api/vehicles")
+@Controller
+@RequestMapping("/vehicles")
 public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
-
-    // Get all Vehicles
+    
+    // main vehicle page
     @GetMapping
-    public List<Vehicle> getAllVehicles() {
-        return vehicleService.getAllVehicles();
-    }
+    public String getAll(Model model) {
+    	// need to give it access to our list of vehicles
+	 	List<Vehicle> vehicles = vehicleService.getAllVehicles();
+	 	model.addAttribute("vehicles", vehicles);
 
+    	return "vehicles";
+    }
+    
+    @GetMapping("/assigned")
+    public String getAssigned(Model model) {
+    	List<Vehicle> assignedVehicles = vehicleService.getAllWatchedVehicles();
+    	model.addAttribute("vehicles", assignedVehicles);
+    	return "assigned";
+    }
+    
+    @GetMapping("/unassigned")
+    public String getUnassigned(Model model) {
+    	List<Vehicle> unassignedVehicles = vehicleService.getAllUnwatchedVehicles();
+    	model.addAttribute("vehicles", unassignedVehicles);
+    	return "unassigned";
+    }
+    
+    @GetMapping("/archived")
+    public String getArchived(Model model) {
+    	List<Vehicle> archivedVehicles = vehicleService.getAllArchivedVehicles();
+    	model.addAttribute("vehicles", archivedVehicles);
+    	return "archived";
+    }
+    
+    // Get Vehicle by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Vehicle> getVehicleById(@PathVariable Integer id) {
-        Optional<Vehicle> vehicleOptional = Optional.ofNullable(vehicleService.getVehicleById(id));
-        System.out.println("Vehicle found: " + vehicleOptional.isPresent());
-        return vehicleOptional.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    // we also need to access the corresponding users to assign stuff
+    public String getVehicleById(@PathVariable Integer id, Model model) {
+        Optional<Vehicle> vehicle = vehicleService.findVehicleById(id);
+        if (vehicle.isPresent()) {
+            model.addAttribute("vehicle", vehicle.get());
+            return "vehicle";
+        } else {
+            return "vehicleNotFound"; // or handle this case appropriately
+        }
     }
 
     // Create new Vehicle

@@ -40,7 +40,7 @@ public class PowerCharge {
     @Column(nullable = false)
     private String meterEntry;
 
-    @Column(nullable = false)
+    @Column(name = "`usage`", nullable = false)
     private double usage;
 
     @Column(nullable = false)
