@@ -35,7 +35,7 @@ public class FleetServiceService {
             service.setPriorityClass(serviceDetails.getPriorityClass());
             service.setMeter(serviceDetails.getMeter());
             service.setServiceTasks(serviceDetails.getServiceTasks());
-            service.setIssues(serviceDetails.getIssues());
+//            service.setIssues(serviceDetails.getIssues());
             service.setVendor(serviceDetails.getVendor());
             service.setTotalPrice(serviceDetails.getTotalPrice());
             service.setWorkOrder(serviceDetails.getWorkOrder());

@@ -29,12 +29,46 @@ public class Issues {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(nullable = false)
+    public int getVehicleId() {
+		return vehicleId;
+	}
+
+	public void setVehicleId(int vehicleId) {
+		this.vehicleId = vehicleId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getReportedBy() {
+		return reportedBy;
+	}
+
+	public void setReportedBy(String reportedBy) {
+		this.reportedBy = reportedBy;
+	}
+
+	public int getUserId() {
+		return UserId;
+	}
+
+	public void setUserId(int userId) {
+		UserId = userId;
+	}
+
+	@Column(nullable = false)
     private String priority;
     
-    @ManyToOne
-    @JoinColumn(name = "vehicleId", nullable = false)
-    private Vehicle vehicle;
+//    @ManyToOne
+//    @JoinColumn(name = "vehicleId", nullable = false)
+//    private Vehicle vehicle;
+    
+    private int vehicleId;
     
     @Column(nullable = false)
     private String assetType;
@@ -46,6 +80,12 @@ public class Issues {
     private String summary;
     
     @Column(nullable = false)
+    private String description;
+    
+    @Column(nullable = false)
+    private String reportedBy;
+    
+    @Column(nullable = false)
     private String status;
     
     @Column(nullable = false)
@@ -54,24 +94,26 @@ public class Issues {
     @Column(nullable = false)
     private LocalDateTime reportedDate;
     
-    @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
-    private User assignedUser;
+//    @ManyToOne
+//    @JoinColumn(name = "userId", nullable = false)
+//    private User assignedUser;
+    
+    private int UserId;
     
     @Column
     private String labels;
     
-    @OneToMany
-    @JoinColumn(name = "userId")
-    private List<User> watchers;
-    
-    @ManyToOne
-    @JoinColumn(name = "teamId", nullable = false)
-    private Team team;
-    
-    @ManyToOne
-    @JoinColumn(name = "serviceId", nullable = false)
-    private FleetService service;
+//    @OneToMany
+//    @JoinColumn(name = "userId")
+//    private List<User> watchers;
+//    
+//    @ManyToOne
+//    @JoinColumn(name = "teamId", nullable = false)
+//    private Team team;
+//    
+//    @ManyToOne
+//    @JoinColumn(name = "serviceId", nullable = false)
+//    private FleetService service;
 
 	public Integer getId() {
 		return id;
@@ -89,13 +131,6 @@ public class Issues {
 		this.priority = priority;
 	}
 
-	public Vehicle getVehicle() {
-		return vehicle;
-	}
-
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
-	}
 
 	public String getAssetType() {
 		return assetType;
@@ -145,13 +180,6 @@ public class Issues {
 		this.reportedDate = reportedDate;
 	}
 
-	public User getAssignedUser() {
-		return assignedUser;
-	}
-
-	public void setAssignedUser(User assignedUser) {
-		this.assignedUser = assignedUser;
-	}
 
 	public String getLabels() {
 		return labels;
@@ -160,30 +188,5 @@ public class Issues {
 	public void setLabels(String labels) {
 		this.labels = labels;
 	}
-
-	public List<User> getWatchers() {
-		return watchers;
-	}
-
-	public void setWatchers(List<User> watchers) {
-		this.watchers = watchers;
-	}
-
-	public Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
-	}
-
-	public FleetService getService() {
-		return service;
-	}
-
-	public void setService(FleetService service) {
-		this.service = service;
-	}
-
     
 }
