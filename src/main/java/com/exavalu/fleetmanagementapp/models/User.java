@@ -21,13 +21,29 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+    
+    @Column(nullable = false)
+    private String password;
 
+    @Column(nullable = false)
+    private String verificationCode;
+    
+    @Column(name = "userRoleId", columnDefinition = "bigint default 2")
+    private final Long userRoleId = 2L;
+    
+    @ManyToOne
+    @JoinColumn(name = "userRoleId", referencedColumnName = "roleId",insertable = false, updatable = false)
+    private Role role;	
+    private final int status = 1;
+    private boolean loggedIn;
+    private String imagePath;
+    
     @Column(nullable = false)
     private String firstName;
 
     @Column(nullable = false)
     private String lastName;
-
+    
     @Column(nullable = false)
     private String volumeUnit;
 
@@ -116,4 +132,54 @@ public class User {
 	public void setTeam(Team team) {
 		this.team = team;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public Long getUserRoleId() {
+		return userRoleId;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+	
+	
 }
