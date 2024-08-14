@@ -13,36 +13,41 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
-	BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	UserDetailsService getDetailsService() {
-		return new CustomUserDetailsService();
-	}
+    @Bean
+    UserDetailsService getDetailsService() {
+        return new CustomUserDetailsService();
+    }
 
-	@Bean
-	DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-		daoAuthenticationProvider.setUserDetailsService(getDetailsService());
-		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-		return daoAuthenticationProvider;
-	}
+    @Bean
+    DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(getDetailsService());
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
+    }
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-						.requestMatchers("/register", "/userRegistration", "/error", "/error2", "/forgetPassword",
-								"/forgetPasswordCreateNew", "/forgotPasswordUpdate")
-						.permitAll().requestMatchers("/assets/**", "/static/**", "/vendor/**", "/img/**", "/js/**")
-						.permitAll() // allows for access to static resources
-						.requestMatchers("/dummy").hasRole("User").anyRequest().authenticated())
-				.formLogin(login -> login.permitAll())
-				.logout(logout -> logout.permitAll());
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+                .requestMatchers("/register", "/userRegistration", "/error", "/error2", "/forgetPassword",
+                        "/forgetPasswordCreateNew", "/forgotPasswordUpdate")
+                .permitAll()
+                .requestMatchers("/assets/**", "/static/**", "/vendor/**", "/img/**", "/js/**")
+                .permitAll()
+                .requestMatchers("/dummy").hasRole("User")
+                .anyRequest().authenticated())
+            .formLogin(login -> login
+                .loginPage("/login") // Path to your custom login page
+                .permitAll()
+                .defaultSuccessUrl("/", true))  // Always redirect to "/" after login
+            .logout(logout -> logout.permitAll());
 
-		return http.build();
-	}
+        return http.build();
+    }
 }
